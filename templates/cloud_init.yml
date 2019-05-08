@@ -1,0 +1,24 @@
+#cloud-config
+groups:
+  - ${user_name}
+users:
+  - name: ${user_name}
+    shell: /bin/bash
+    sudo: ['ALL=(ALL) NOPASSWD:ALL']
+    primary-group: ${user_name}
+    groups: sudo
+    lock_passwd: true
+    ssh-authorized-keys:
+      - ${ssh_authorized-key}
+growpart:
+  mode: auto
+  devices: ['/']
+apt:
+  sources:
+    certbot:
+      source: "ppa:certbot/certbot"
+package_upgrade: true
+packages:
+  - qemu-guest-agent
+  - software-properties-common
+  - nginx
